@@ -1,0 +1,32 @@
+.*{
+	margin:0px;
+}
+.calendar{
+	height: 100%;
+	width:100%;
+}
+.month{
+	display: none;
+}
+.day, .day-invisible{
+	width: calc(100% / 7 - 2px);
+	padding: 5px;
+	border: 1px solid #fff;
+	display: inline-block;
+}
+.day{
+	background: #dedede;
+}
+.day-invisible{
+	
+	background: transparent;
+}
+.monthname{
+	text-align: center;
+	font-size:
+}
+.prev, .next{
+	background-color: transparent;
+	
+	
+}
