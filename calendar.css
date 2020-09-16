@@ -1,9 +1,16 @@
-.*{
+:root{
 	margin:0px;
+	--calendar-bg:transparent;
+	--calendar-day-bg:#eee;
+	--calendar-day-bg-hover: #222;
+	--calendar-day-col: #222;
+	--calendar-day-col-hover: #eee;
+	--calendar-month-size:42px;
 }
 .calendar{
 	height: 100%;
 	width:100%;
+	background: var(--calendar-bg);
 }
 .month{
 	display: none;
@@ -15,18 +22,26 @@
 	display: inline-block;
 }
 .day{
-	background: #dedede;
+	background-color: var(--calendar-day-bg);
+}
+.day span{
+	color: var(--calendar-day-col)
+}
+.day:hover{
+	background-color: var(--calendar-day-bg-hover);
+}
+.day:hover span{
+	color: var(--calendar-day-col-hover)
 }
 .day-invisible{
-	
 	background: transparent;
 }
 .monthname{
 	text-align: center;
-	font-size:
+	font-size:var(--calendar-month-size);
 }
+
 .prev, .next{
-	background-color: transparent;
-	
-	
+	background-color: transparent;	
 }
+
