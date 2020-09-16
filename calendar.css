@@ -4,7 +4,7 @@
 	--calendar-day-bg-hover: #222;
 	--calendar-day-col: #222;
 	--calendar-day-col-hover: #eee;
-	--calendar-month-size:42px;
+	--calendar-month-size:20px;
 }
 .calendar{
 	height: 100%;
@@ -36,10 +36,25 @@
 .day-invisible{
 	background: transparent;
 }
+.head{
+	display: flex;
+	justify-content: space-between;
+}
 .monthname{
 	text-align: center;
 	font-size:var(--calendar-month-size);
 }
 .prev, .next{
 	background-color: transparent;	
+	font-size: var(--calendar-month-size);
+}
+.prev{margin-left: 10px;}
+.next{margin-right: 10px;}
+
+@media screen and (max-width: 992px){
+	.prev, .next{
+		margin: 0px;
+		min-width: 40px;
+		min-height: 40px;
+	}
 }
