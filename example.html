@@ -2,21 +2,21 @@
 <html>
 	<head>
 		<meta charset="utf-8"/>
+		<script src="./calendar.js"></script>
 		<script>
-			const config = {
-				months: ["Jannuar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+			window.onload=()=>generateCalendar({
+				rootElement:"#kalender",
+				months: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
 				days: ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"],
 				firstDayOfWeekOffset:6,
 				stylesheet:"./calendar.css",
-				dayclickfunction: ()=>console.log(this)
-			}
+				onBoxReady: (box)=>console.log(box)
+			});
 		</script>
-		<script src="./calendar.js"></script>
-		<script>
-			window.onload=()=>generateCalendar("#kalender");
-		</script>
+		<style>body{margin:0px;}</style>
 	</head>
 	<body>
+		<h1>German Calendar</h1>
 		<div id="kalender"></div>
 	</body>
 </html>
