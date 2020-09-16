@@ -1,10 +1,34 @@
 /*(c)2020 Lukas Möges*/
+var calConfig = {
+	rootElement:"#calendar",
+	months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+	days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+	firstDayOfWeekOffset:6,
+	stylesheet:"./calendar.css"
+};
 
-function generateCalendar(rootElementIdentifier){
+function generateCalendar(config){
+	if(!config)
+		throw new Error("Configuration must not be empty! For more information see https://github.com/LMoeges/jscalendar");
+	if(config.rootElement)
+		calConfig.rootElement = config.rootElement;
+	if(config.months)
+		calConfig.months = config.months;
+	if(config.days)
+		calConfig.days = config.days;
+	if(config.firstDayOfWeekOffset)
+		calConfig.firstDayOfWeekOffset = config.firstDayOfWeekOffset;
+	if(config.stylesheet)
+		calConfig.stylesheet= config.stylesheet;
+	if(config.onBoxReady)
+		calConfig.onBoxReady = config.onBoxReady;
+	
 	//First: Load Stylesheet
 	loadStyles();
+
+
 	//Get the root element
-	var rootElement = document.querySelector(rootElementIdentifier);
+	var rootElement = document.querySelector(calConfig.rootElement);
 	
 	let year = new Date();
 	let calendar= document.createElement("div");
@@ -27,7 +51,7 @@ function generateMonth(year, month){
 	//Set the month Text
 	let monthSpan = document.createElement("span");
 	monthSpan.classList.add("monthname");
-	monthSpan.innerText= config.months[month]+ " "+ year;
+	monthSpan.innerText= calConfig.months[month]+ " "+ year;
 	
 	//Create prev and next buttons
 	let prev = document.createElement("button");
@@ -53,7 +77,7 @@ function generateMonth(year, month){
 	let days= createClassDiv("days");
 	
 	let monthDate = new Date(year, month, 0);
-	let invBoxes = (new Date(year, month, 1).getDay()+config.firstDayOfWeekOffset)%7;
+	let invBoxes = (new Date(year, month, 1).getDay()+calConfig.firstDayOfWeekOffset)%7;
 	let neededBoxes = monthDate.getDate();
 	
 	//Add invisible Boxes
@@ -77,9 +101,18 @@ function generateBox(date){
 		let data = document.createElement("span");
 		data.classList.add("date");
 		data.innerText = date;
-		if(config.dayclickfunction)
-			box.addEventListener("click", config.dayclickfunction);
 		box.appendChild(data);
+		box.appendChild(createClassDiv("event"));
+		
+		//If it is configured to make use of this Event than create and fire it
+		if(calConfig.onBoxReady){
+			var boxready = new CustomEvent('boxready', {box:box});
+			box.addEventListener("boxready", (e)=>{
+				var day = e.target;
+				calConfig.onBoxReady(day);			
+			});
+			box.dispatchEvent(boxready);
+		}	
 	}
 	return box;
 }
@@ -100,6 +133,6 @@ function loadStyles(){
 	let stylesheet = document.createElement("link");
 	stylesheet.rel="stylesheet";
 	stylesheet.type="text/css";
-	stylesheet.href=config.stylesheet;
+	stylesheet.href=calConfig.stylesheet;
 	document.querySelector("head").appendChild(stylesheet);
 }
