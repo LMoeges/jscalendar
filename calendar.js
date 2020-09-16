@@ -101,7 +101,7 @@ function generateBox(date, month){
 		box.classList.add("day-invisible");
 	else{		
 		box.classList.add("day");
-		box.id=""+date+"-"+(month+1)+"-"+new Date().getFullYear();
+		box.id=""+new Date().getFullYear()+"-"+(month+1)+"-"+date;
 
 		//If the weekdays should be displayed, add them here...
 		if(calConfig.showWeekdays){
