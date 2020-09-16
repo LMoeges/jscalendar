@@ -4,6 +4,7 @@ var calConfig = {
 	months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
 	days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
 	firstDayOfWeekOffset:6,
+	showWeekdays: true,
 	stylesheet:"./calendar.css"
 };
 
@@ -22,6 +23,8 @@ function generateCalendar(config){
 		calConfig.stylesheet= config.stylesheet;
 	if(config.onBoxReady)
 		calConfig.onBoxReady = config.onBoxReady;
+	if(config.showWeekdays!=null || config.showWeekdays != undefined)
+		calConfig.showWeekdays = config.showWeekdays;
 	
 	//First: Load Stylesheet
 	loadStyles();
@@ -77,7 +80,7 @@ function generateMonth(year, month){
 	let days= createClassDiv("days");
 	
 	let monthDate = new Date(year, month+1, 0);
-	let invBoxes = (new Date(year, month, 1).getDay()+calConfig.firstDayOfWeekOffset)%7;
+	let invBoxes = getWeekDayIncOffset(year, month, 1);
 	let neededBoxes = monthDate.getDate();
 	
 	//Add invisible Boxes
@@ -99,8 +102,18 @@ function generateBox(date, month){
 	else{		
 		box.classList.add("day");
 		box.id=""+date+"-"+(month+1)+"-"+new Date().getFullYear();
-		let data = document.createElement("span");
-		data.classList.add("date");
+
+		//If the weekdays should be displayed, add them here...
+		if(calConfig.showWeekdays){
+			let weekday = createClassSpan("weekday");
+			weekday.innerText= calConfig.days[getWeekDayIncOffset(new Date().getFullYear(), month, date)];
+			box.appendChild(weekday);
+		}
+
+		let data = createClassSpan("date");
+
+		if(!calConfig.showWeekdays)
+			data.classList.add("wowd");
 		data.innerText = date;
 		box.appendChild(data);
 		box.appendChild(createClassDiv("event"));
@@ -118,10 +131,18 @@ function generateBox(date, month){
 	return box;
 }
 
-function createClassDiv(classname){
-	let div = document.createElement("div");
-	div.classList.add(classname);
-	return div;
+function createClassDiv(classname){return createClassElement("div", classname);}
+
+function createClassSpan(classname){return createClassElement("span", classname);}
+
+function createClassElement(el, classname){
+	let obj = document.createElement(el);
+	obj.classList.add(classname);
+	return obj;
+}
+
+function getWeekDayIncOffset(year, month, day){
+	return (new Date(year,month,day).getDay()+calConfig.firstDayOfWeekOffset)%7;
 }
 
 function changeMonth(month, value){
