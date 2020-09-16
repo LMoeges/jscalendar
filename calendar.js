@@ -76,7 +76,7 @@ function generateMonth(year, month){
 	//Generate the days in a month
 	let days= createClassDiv("days");
 	
-	let monthDate = new Date(year, month, 0);
+	let monthDate = new Date(year, month+1, 0);
 	let invBoxes = (new Date(year, month, 1).getDay()+calConfig.firstDayOfWeekOffset)%7;
 	let neededBoxes = monthDate.getDate();
 	
@@ -85,19 +85,20 @@ function generateMonth(year, month){
 		days.appendChild(generateBox());
 	//Add Calendar Days
 	for(j = 1; j<=neededBoxes; j++)
-		days.appendChild(generateBox(j));
+		days.appendChild(generateBox(j, month));
 	
 	monthDiv.appendChild(days);
 	return monthDiv;
 }
 
 //Function for generating the Calendardays
-function generateBox(date){
+function generateBox(date, month){
 	var box = document.createElement("div");
 	if(!date)
 		box.classList.add("day-invisible");
 	else{		
 		box.classList.add("day");
+		box.id=""+date+"-"+(month+1)+"-"+new Date().getFullYear();
 		let data = document.createElement("span");
 		data.classList.add("date");
 		data.innerText = date;
