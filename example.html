@@ -10,7 +10,9 @@
 				days: ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"],
 				firstDayOfWeekOffset:6,
 				stylesheet:"./calendar.css",
-				onBoxReady: (box)=>console.log(box)
+				showWeekdays: false,
+				onBoxReady: (box)=>{box.querySelector(".event").innerText="Hallo";
+				box.addEventListener("click", (e)=>console.log(e.target));}
 			});
 		</script>
 		<style>

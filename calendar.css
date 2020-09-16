@@ -5,6 +5,9 @@
 	--calendar-day-col: #222;
 	--calendar-day-col-hover: #eee;
 	--calendar-month-size:20px;
+	--calendar-day-size:16px;
+	--calendar-weekday-size:12px;
+	--calender-margin-sides: 10px;
 }
 .calendar{
 	height: 100%;
@@ -14,9 +17,12 @@
 .month{
 	display: none;
 }
+.days{
+	margin: 5px var(--calender-margin-sides);
+}
 .day, .day-invisible{
 	box-sizing: border-box;
-	width: calc(100% / 7 - 2px);
+	width: calc(100% / 7);
 	padding: 5px;
 	border: 1px solid #fff;
 	display: inline-block;
@@ -24,17 +30,31 @@
 .day{
 	background-color: var(--calendar-day-bg);
 }
-.day span{
+.day span, .day .event{
 	color: var(--calendar-day-col)
 }
 .day:hover{
 	background-color: var(--calendar-day-bg-hover);
 }
-.day:hover span{
+.day:hover span, .day:hover .event{
 	color: var(--calendar-day-col-hover)
 }
 .day-invisible{
 	background: transparent;
+}
+.date{
+	float: right;
+	font-size: var(--calendar-day-size);
+}
+.weekday{
+	font-size: var(--calendar-weekday-size);
+}
+.wowd{
+
+	float: none;
+}
+.event{
+	display: block;
 }
 .head{
 	display: flex;
