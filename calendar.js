@@ -12,6 +12,7 @@ const monthIdPrefix = "MID_";
 const yearIdPrefix = "YID_";
 const dayIdPrefix = "DID_";
 
+
 function generateCalendar(config){
 	if(!config)
 		throw new Error("Configuration must not be empty! For more information see https://github.com/LMoeges/jscalendar");
@@ -126,14 +127,14 @@ function generateBox(date, month, year){
 		box.appendChild(createClassDiv("event"));
 		
 		//If it is configured to make use of this Event than create and fire it
-		if(calConfig.onBoxReady){
+		if(typeof onBoxReady==='function'){
 			var boxready = new CustomEvent('boxready', {box:box});
 			box.addEventListener("boxready", (e)=>{
 				var day = e.target;
-				calConfig.onBoxReady(day);			
+				onBoxReady(day);			
 			});
 			box.dispatchEvent(boxready);
-		}	
+		}
 	}
 	return box;
 }
